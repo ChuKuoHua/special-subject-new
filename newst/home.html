@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>專題</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+<!---外部區塊-->
+<div class="warp">
+        
+    <div class="header">
+        <div class="title">
+            <h1>智慧<span>室內白蝦養殖</span></h1>
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="../newst/home.html"><span class="home">首頁</span></a></li>
+            <li><a href="../newst/system.html"><span class="system">設備管理</span></a></li>
+            <li><a href="../newst/his.html"><span class="his">歷史資料</span></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        <div class="env">
+            <h1>環境資訊</h1>
+           <img src="../newst/images/bubble.png" alt="">
+           <div class="logo">
+                <img src="../newst/images/ksu.png" alt="">
+             </div>
+           <!--環境感測資訊區塊 -->
+            <div class="panel panel-primary">
+                <div class="panel-body" >
+                    <table width="100%" height="88" class="table table-hover1" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th width="50%"></th>
+                                <th width="50%"></th>		
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                        </tbody>
+                    </table>
+                </div>					
+            </div>
+        </div>
+        <!--介紹-->
+        <div class="main">
+            <table>
+                <tr >
+                    <th colspan="3"><h2>網頁監控</h2></th>
+                </tr>
+                <tr>         
+                    <td></td>           
+                    <td class="tit" >設備管理</td>                    
+                    <td><span>用於設定環境的上下限，以及遠端控制電器的開關．</span></td>
+                </tr>
+                 <tr>    
+                    <td></td>                
+                    <td class="tit" >歷史資料</td>                    
+                    <td><span>分析數據資料，藉由圖表分析每個日期的狀況．</span></td>
+                </tr>                
+                <!--電器介紹-->
+                 <tr>
+                    <th colspan="3"><h2>電器設備</h2></th>
+                </tr>
+                <tr>
+                    <td><img src="../newst/images/feed.png" alt=""></td>
+                    <td class="tit">餵食器</td>                    
+                    <td><span>能藉由網頁遠端控來控制開關，以每8小時會重新餵食一次．</span></td>
+                </tr>
+                 <tr>
+                    <td><img src="../newst/images/fan.png" alt=""></td>
+                    <td class="tit">風散</td>                    
+                    <td><span>用於降低水溫，大於所設定的溫度時會自動啟動．</span></td>
+                </tr>
+                <tr>
+                    <td><img src="../newst/images/hot.png" alt=""></td>
+                    <td class="tit">加熱棒</td>                    
+                    <td><span>用於增加水溫，小於所設定的溫度時會自動啟動．</span></td>
+                </tr>    
+                <!--感測器介紹-->
+                <tr>
+                    <th colspan="3"><h2>感測器</h2></th>
+                </tr>
+                <tr>
+                    <td><img src="../newst/images/tp.png" alt=""></td>
+                    <td class="tit">溫度</td>                    
+                    <td><span>測量水中的溫度，透過設備管理設定它的範圍，超過或低於時會啟動控溫設備．</span></td>
+                </tr>
+                 <tr>
+                    <td><img src="../newst/images/ph.png" alt=""></td>
+                    <td class="tit">PH</td>                    
+                    <td><span>測量水中的PH，透過設備管理設定範圍，超過或低於所設定之範圍時會傳送信箱通知．</span></td>
+                </tr>              
+            </table>
+        </div>
+    </div>    
+</div>
+<!---外部區塊end-->
+<script src="//code.jquery.com/jquery-1.11.3.min.js">
+</script>
+<script>
+$(function(){
+    $.post('api.php',{action:'getSensor'},function(data){
+        for(var i in data){
+            
+            $('table:eq(0) tbody').append(
+                $('<tr/>').append(
+                    $('<th/>').text(data[i].ch_name)), 
+                $('<tr/>').append(	
+                    $('<th/>').text(data[i].value).addClass('value'),
+                    $('<td/>').text(data[i].datetime).addClass('time')							
+                ),
+                $('<br/>').append(),
+                $('<br/>').append()
+                .addClass(data[i].name)
+            )
+
+        }
+    },'json');
+    setInterval(function(){
+        $.post('api.php',{action:'getSensor'},function(data){
+            for(var i in data){
+                $('table:eq(0) tbody tr.'+data[i].name+' td.value').text(data[i].value);
+                $('table:eq(0) tbody tr.'+data[i].name+' td.time').text(data[i].datetime);
+            }
+        },'json');
+    },60000);
+    
+});
+</script>
+</body>
+</html>
