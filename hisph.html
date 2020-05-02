@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>專題</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/hover.css">
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/hot-sneaks/jquery-ui.css" rel="stylesheet">
+</head>
+
+<body>
+<!---外部區塊-->
+<div class="warp">
+    <div class="header">
+        <div class="title">
+            <h1>智慧<span>室內白蝦養殖</span></h1>
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="../special-subject-new/home.html"><span class="home">首頁</span></a></li>
+            <li><a href="../special-subject-new/system.html"><span class="system">設備管理</span></a></li>
+            <li><a href="../special-subject-new/his.html"><span class="his">歷史資料</span></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        <div class="env">
+            <h1>環境資訊</h1>
+            <img src="../special-subject-new/images/bubble.png" alt="">
+            <div class="logo">
+                <img src="../special-subject-new/images/ksu.png" alt="">
+                </div>
+            <!--環境感測資訊區塊 -->
+            <div class="panel panel-primary">
+                <div class="panel-body" >
+                    <table width="100%" height="88" class="table table-hover1" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th width="50%"></th>
+                                <th width="50%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <!--下拉式區塊-->
+            <div class="chartmenu">
+                <ul>
+                    <li >
+                        <a id="charttp" href="#" onClick="location.href ='his.html'">溫度</a>
+                    </li>
+                    <li >
+                        <a href="#" onClick="location.href ='hisph.html'">PH</a>
+                    </li>
+                    <li >
+                        <a href="#">
+                        <!-- 小日曆+點擊消失 -->
+                            <input type="text" name="tt" id="datepicker1" value="YY/MM/DD" onFocus="cleartext(this)" onBlur="resettext(this)" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--圖表-->
+            <div class="tpchart">
+                <p>PH圖表</p>
+                <div  class="panel-body">
+                    <button type="button" style="cursor: pointer;" onClick="temp_chart()">更新圖表</button>
+                    <div id="container"></div>
+                </div>
+            </div> <!-- end .panel --> 
+        </div>
+    </div>
+</div>
+<!---外部區塊end-->
+<!-- 日曆點擊消失 -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript">
+    function resettext(id){
+        //恢復文字
+        if(id.value == "")
+        {
+        id.value = id.defaultValue;
+        id.className ="t1";   
+        }
+    }
+    function cleartext (id){ 
+        //清除文字
+        id.value ="";
+        d.className ="";
+    }
+</script>
+<!-- 日曆點擊消失 -->
+<!-- 小日曆 -->
+<script language="JavaScript">
+    $(document).ready(function(){ 
+        $("#datepicker1").datepicker({
+            showOn: "button",
+            buttonText: "日曆",
+            buttonImage: "../special-subject-new/images/calendar.png",
+            dateFormat: "yy/mm/dd"
+        }).on( "change", function() {
+            temp_chart()
+        });
+    });
+</script>
+<!-- 小日曆end -->
+<script>
+$(function(){
+    $.post('api.php',{action:'getSensor'},function(data){
+        for(var i in data){
+            $('table:eq(0) tbody').append(
+                $('<tr/>').append(
+                    $('<th/>').text(data[i].ch_name)), 
+                $('<tr/>').append(
+                    $('<th/>').text(data[i].value).addClass('value'),
+                    $('<td/>').text(data[i].datetime).addClass('time')							
+                ),
+                $('<br/>').append(),
+                $('<br/>').append()
+                .addClass(data[i].name)
+            )
+        }
+    },'json');
+    setInterval(function(){
+        $.post('api.php',{action:'getSensor'},function(data){
+            for(var i in data){
+                $('table:eq(0) tbody tr.'+data[i].name+' td.value').text(data[i].value);
+                $('table:eq(0) tbody tr.'+data[i].name+' td.time').text(data[i].datetime);
+            }
+        },'json');
+    },60000);
+    temp_chart();
+});
+//將取得的值逐一加入圖表中
+function appendPoint(chart,date,temp,shift) {
+    chart.series[0].addPoint([date, temp], false, shift);
+}
+//產生環境溫度圖表
+function temp_chart(){
+    var options = {
+        chart: {
+            renderTo: 'container', //顯示在哪一區域
+            type: 'spline',
+            height: 260
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            title:{
+                text:"時間"
+            },
+            type: 'datetime',
+            labels: {
+formatter: function() {
+    return  Highcharts.dateFormat('%H:%M', this.value);
+                }
+            }
+        },
+        yAxis: [{
+            min: 0,
+            title: {
+                text: 'PH'
+            }
+        }],
+        plotOptions: {
+            spline: {
+                lineWidth: 4,
+                states: {
+                    hover: {
+                        lineWidth: 5
+                    }
+                },
+                marker: {
+                    enabled: false
+                },
+            }
+        },
+        series: [{
+            name: '環境PH'
+        }]
+    };
+tempchart = new Highcharts.Chart(options);
+    $.post('api.php',{action:'getTemp',date:$("#datepicker1").val()},function(data){
+        for(var i in data){	
+            datetime=data[i].datetime.split(' ');
+            date=datetime[0].split('-');
+            time=datetime[1].split(':');
+            date=Date.UTC(date[0],date[1]-1,date[2],time[0],time[1],time[2]);				
+            //加入一筆資料到圖表中
+            appendPoint(tempchart,date,parseFloat(data[i].temp,10));
+        }
+        tempchart.redraw();
+    },'json');
+}
+</script>
+</body>
+</html>

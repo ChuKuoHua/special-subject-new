@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>專題</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+<!---外部區塊-->
+<div class="warp">
+    <div class="header">
+        <div class="title">
+            <h1>智慧<span>室內白蝦養殖</span></h1>
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="../special-subject-new/home.html"><span class="home">首頁</span></a></li>
+            <li><a href="../special-subject-new/system.html"><span class="system">設備管理</span></a></li>
+            <li><a href="../special-subject-new/his.html"><span class="his">歷史資料</span></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        <div class="env">
+            <h1>環境資訊</h1>
+            <img src="../special-subject-new/images/bubble.png" alt="">
+            <div class="logo">
+                <img src="../special-subject-new/images/ksu.png" alt="">
+                </div>
+            <!--環境感測資訊區塊 -->
+            <div class="panel panel-primary">
+                <div class="panel-body" >
+                    <table width="100%" height="88" class="table table-hover1" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th width="50%"></th>
+                                <th width="50%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<!---外部區塊end-->
+<script src="//code.jquery.com/jquery-1.11.3.min.js">
+</script>
+<script>
+$(function(){
+    $.post('api.php',{action:'getSensor'},function(data){
+        for(var i in data){            
+            $('table:eq(0) tbody').append(
+                $('<tr/>').append(
+                    $('<th/>').text(data[i].ch_name)), 
+                $('<tr/>').append(	
+                    $('<th/>').text(data[i].value).addClass('value'),
+                    $('<td/>').text(data[i].datetime).addClass('time')							
+                ),
+                $('<br/>').append(),
+                $('<br/>').append()
+                .addClass(data[i].name)
+            )
+        }
+    },'json');
+    setInterval(function(){
+        $.post('api.php',{action:'getSensor'},function(data){
+            for(var i in data){
+                $('table:eq(0) tbody tr.'+data[i].name+' td.value').text(data[i].value);
+                $('table:eq(0) tbody tr.'+data[i].name+' td.time').text(data[i].datetime);
+            }
+        },'json');
+    },60000);
+    
+});
+</script>
+</body>
+</html>

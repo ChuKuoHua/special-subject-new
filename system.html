@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>專題</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/switch.css">
+</head>
+
+<body>
+<!---外部區塊-->
+<div class="warp">
+    <div class="header">
+        <div class="title">
+            <h1>智慧<span>室內白蝦養殖</span></h1>
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="../special-subject-new/home.html"><span class="home">首頁</span></a></li>
+            <li><a href="../special-subject-new/system.html"><span class="system">設備管理</span></a></li>
+            <li><a href="../special-subject-new/his.html"><span class="his">歷史資料</span></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        <div class="env">
+            <h1>環境資訊</h1>
+            <img src="../special-subject-new/special-subject-new/images/bubble.png" alt="">
+            <div class="logo">
+                <img src="../special-subject-new/images/ksu.png" alt="">
+                </div>
+            <!--環境感測資訊區塊 -->
+            <div class="panel panel-primary">
+                <div class="panel-body" >
+                    <table width="100%" height="88" class="table table-hover1" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th width="50%"></th>
+                                <th width="50%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="main environ">
+            <div class="device">
+            <table>
+                <tr>
+                    <th class="tit-bg" colspan="4">環境管理</th>
+                </tr>
+                <tr>
+                    <td class="tpimg">
+                        <img src="../special-subject-new/images/tp-img.png" alt="">
+                    </td>
+                    <td class="range">
+                        <span class="tplow">下限</span>
+                        <select  class="tpmin">            
+                            <option value="26">26</option>
+                            <option value="25">25</option>
+                            <option value="24">24</option>
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="20">20</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span class="tpbig">上限</span>
+                        <select  class="tpmax" >
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                        </select>
+                    </td>
+                    <td class="temp-sub">
+                        <button class="temp" value="Submit" onClick=control ("6","temp")><b>確定</b></button> 
+                    </td>
+                </tr>
+                <tr>
+                    <td  class="phimg">
+                        <img src="../special-subject-new/images/ph-img.png" alt="">
+                    </td>
+                    <td>
+                        <span class="phlow">下限</span>
+                        <select  class="phmin"> 
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span class="phbig">上限</span> 
+                        <select class="phmax" >
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                        </select>
+                    </td>
+                    <td class="ph-sub">
+                        <button class="ph" value="Submit" onClick=control ("A0","ph") ><b>確定</b></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="tit-bg" colspan="4">設備控制</th>
+                </tr>
+                <tr>
+                    <td class="feedimg">
+                        <img src="../special-subject-new/images/feed-img.png" alt="">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="onoffswitch" id="myonoffswitch" checked class="onoffswitch-checkbox" onClick=control ("3","feed");>
+                        <label  for="myonoffswitch" class="onoffswitch-label onoffswitch1">
+                            <span class="onoffswitch-inner" ></span>
+                            <span class="onoffswitch-switch" ></span>
+                        </label>  
+                    </td>
+                    <td>
+                        <img src="../special-subject-new/images/time-img.png" alt="">
+                    </td>
+                    <td>
+                        <select class="feedtime"> 
+                            <option value="8">8hr</option>
+                            <option value="12">12hr</option>
+                            <option value="24">24hr</option>
+                        </select>
+                        <button class="ft" value="Submit" id="timing" onClick=control ("tu","timing")><b>確定</b></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="tit-bg" colspan="4">環境狀態</th>
+                </tr>
+                <tr>
+                    <td class="tpimg">
+                        <img src="../special-subject-new/images/tp-img.png" alt="">
+                    </td>
+                    <td class="tempStatus" style="font-family:Comic Sans MS, cursive;"></td>
+                    <td>
+                        <img src="../special-subject-new/images/ph-img.png" alt="">
+                    </td>
+                    <td class="phStatus" style="font-family:Comic Sans MS, cursive;"></td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>    
+</div>
+<!---外部區塊end-->
+<script src="//code.jquery.com/jquery-1.11.3.min.js">
+</script>
+<script>
+$(function(){
+    $.post('api.php',{action:'getSensor'},function(data){
+        for(var i in data){
+            
+            $('table:eq(0) tbody').append(
+                $('<tr/>').append(
+                    $('<th/>').text(data[i].ch_name)), 
+                $('<tr/>').append(	
+                    $('<th/>').text(data[i].value).addClass('value'),
+                    $('<td/>').text(data[i].datetime).addClass('time')							
+                ),
+                $('<br/>').append(),
+                $('<br/>').append()
+                .addClass(data[i].name)
+            )
+
+        }
+    },'json');
+    setInterval(function(){
+        $.post('api.php',{action:'getSensor'},function(data){
+            for(var i in data){
+                $('table:eq(0) tbody tr.'+data[i].name+' td.value').text(data[i].value);
+                $('table:eq(0) tbody tr.'+data[i].name+' td.time').text(data[i].datetime);
+            }
+        },'json');
+    },60000);
+});
+//環境判斷
+function Status(name,value) {
+    var x=value;
+    switch(name){
+        case 'temp':
+            $('td.tempStatus').html('');
+            if(x > 40 || x < 0){
+                $('td.tempStatus').append('<font color=red  >異常</font>');		 
+            } else {
+                $('td.tempStatus').append('<font color=green>正常</font>');
+                    
+            }
+        break;
+        case 'ph':
+            $('td.phStatus').html('');
+            if(x >12 || x < 3){
+                $('td.phStatus').append('<font color=red >異常</font>');
+            
+            } else {
+                $('td.phStatus').append('<font color=green >正常</font>');
+                    
+            }
+        break;
+    }
+}
+//控制繼電器
+function control(cmd,type){
+    switch(type){ //判斷switch
+        case 'temp':
+        //取temp上下限值
+            cmd='tp:'+$("select.tpmin").val()+','+$("select.tpmax").val(); 
+        break;
+        case 'ph':
+        //取ph上下限值
+            cmd='ph:'+$("select.phmin").val()+','+$("select.phmax").val();
+        break;        
+        case 'feed':
+            var status3=$("#myonoffswitch").prop("checked");
+        
+            if(status3){
+                cmd+=',H';
+            }
+            else{
+                cmd+=',L';
+            }
+        break;        
+        case 'timing':
+            cmd='timing:'+$("select.timing").val();
+        break;
+    }
+    console.log(cmd);
+    $.post('action.php',{cmd:cmd});
+}
+</script>
+</body>
+</html>
