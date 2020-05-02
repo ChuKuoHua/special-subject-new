@@ -172,8 +172,7 @@
 <script>
 $(function(){
     $.post('api.php',{action:'getSensor'},function(data){
-        for(var i in data){
-            
+        for(var i in data){            
             $('table:eq(0) tbody').append(
                 $('<tr/>').append(
                     $('<th/>').text(data[i].ch_name)), 
@@ -185,7 +184,6 @@ $(function(){
                 $('<br/>').append()
                 .addClass(data[i].name)
             )
-
         }
     },'json');
     setInterval(function(){
@@ -207,7 +205,6 @@ function Status(name,value) {
                 $('td.tempStatus').append('<font color=red  >異常</font>');		 
             } else {
                 $('td.tempStatus').append('<font color=green>正常</font>');
-                    
             }
         break;
         case 'ph':
@@ -217,7 +214,6 @@ function Status(name,value) {
             
             } else {
                 $('td.phStatus').append('<font color=green >正常</font>');
-                    
             }
         break;
     }
@@ -232,7 +228,7 @@ function control(cmd,type){
         case 'ph':
         //取ph上下限值
             cmd='ph:'+$("select.phmin").val()+','+$("select.phmax").val();
-        break;        
+        break;
         case 'feed':
             var status3=$("#myonoffswitch").prop("checked");
         
@@ -242,7 +238,7 @@ function control(cmd,type){
             else{
                 cmd+=',L';
             }
-        break;        
+        break;
         case 'timing':
             cmd='timing:'+$("select.timing").val();
         break;
