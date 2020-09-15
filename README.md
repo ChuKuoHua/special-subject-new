@@ -13,7 +13,7 @@
 <ul>
   <li>HTML、CSS</li>
   <li>JavaScript</li>
-  <li>D3.js</li>
+  <li>Highcharts</li>
   <li>PHP</li>
   <li>phpMyAdmin</li>
 </ul>
